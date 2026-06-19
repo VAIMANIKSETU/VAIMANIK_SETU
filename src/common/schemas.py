@@ -11,6 +11,8 @@ class SensorData:
     gps_alt: float
     barometer_alt: float
 
+    gps_heading: float = 0.0
+
 
 @dataclass
 class FeatureData:
@@ -30,3 +32,11 @@ class TrustData:
 class FusionData:
     fused_lat: float
     fused_lon: float
+    fused_alt: float
+
+    fused_vn: float
+    fused_ve: float
+
+    fused_heading: float
+
+    
