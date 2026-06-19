@@ -1,3 +1,5 @@
+from common.schemas import FusionData
+
 def fuse(sensor_data):
 
     fused_lat = (
@@ -10,7 +12,8 @@ def fuse(sensor_data):
         sensor_data.imu_lon
     ) / 2
 
-    return {
-        "fused_lat": fused_lat,
-        "fused_lon": fused_lon
-    }
+    return FusionData(
+    fused_lat=fused_lat,
+    fused_lon=fused_lon
+)
+
