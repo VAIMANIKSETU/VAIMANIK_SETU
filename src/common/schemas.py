@@ -16,8 +16,17 @@ class SensorData:
 class FeatureData:
     distance_error: float
     speed_error: float
+    altitude_error: float
+    heading_error: float
 
 
 @dataclass
 class TrustData:
     trust_score: float
+    attack_detected: bool
+    
+
+@dataclass
+class FusionData:
+    fused_lat: float
+    fused_lon: float
