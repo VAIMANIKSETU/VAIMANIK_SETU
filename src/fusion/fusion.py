@@ -3,15 +3,24 @@ from common.schemas import FusionData
 
 ekf = ExtendedKalmanFilter()
 
-def fuse(sensor_data):
+def get_residual():
+    return ekf.get_residual()
 
-    ekf.predict(sensor_data.imu_speed)
+def fuse(sensor_data, use_gps=True):
 
-    ekf.update(
-    sensor_data.gps_lat,
-    sensor_data.gps_lon,
-    sensor_data.gps_alt
+    ekf.predict(
+    sensor_data.imu_speed,
+    sensor_data.gyro_z
     )
+
+    if use_gps:
+        ekf.update(
+            sensor_data.gps_lat,
+            sensor_data.gps_lon,
+            sensor_data.gps_alt,
+            sensor_data.gps_heading
+        )
+
 
     state = ekf.get_state()
 
