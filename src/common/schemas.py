@@ -10,8 +10,15 @@ class SensorData:
     imu_speed: float
     gps_alt: float
     barometer_alt: float
+    gps_heading: float
 
-    gps_heading: float = 0.0
+    accel_x: float
+    accel_y: float
+    accel_z: float
+
+    gyro_x: float
+    gyro_y: float
+    gyro_z: float
 
 
 @dataclass
@@ -20,12 +27,14 @@ class FeatureData:
     speed_error: float
     altitude_error: float
     heading_error: float
+    gps_residual: float
 
 
 @dataclass
 class TrustData:
     trust_score: float
     attack_detected: bool
+    gps_trusted: bool
     
 
 @dataclass
