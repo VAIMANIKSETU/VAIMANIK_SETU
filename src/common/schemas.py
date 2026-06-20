@@ -27,7 +27,6 @@ class FeatureData:
     speed_error: float
     altitude_error: float
     heading_error: float
-    gps_residual: float
 
 
 @dataclass
