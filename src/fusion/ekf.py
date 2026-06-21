@@ -6,11 +6,8 @@ class ExtendedKalmanFilter:
     def __init__(self):
 
         # State:
-        # [latitude,
-        #  longitude,
-        #  altitude,
-        #  velocity_north,
-        #  velocity_east,
+        # [latitude, longitude, altitude,
+        #  velocity_north, velocity_east,
         #  heading]
 
         self.last_residual = 0.0
@@ -34,30 +31,42 @@ class ExtendedKalmanFilter:
     def predict(
         self,
         velocity,
+        accel_x=0.0,
+        accel_y=0.0,
         gyro_z=0.0
     ):
 
         dt = 1.0
 
         # Update heading using gyro
+
         heading = self.x[5, 0]
         heading += gyro_z * dt
-
         heading = heading % 360
 
         self.x[5, 0] = heading
 
         # Convert heading to radians
+
         heading_rad = np.radians(heading)
 
-        # Velocity decomposition
+        # Velocity from IMU speed
+
         vn = velocity * np.cos(heading_rad)
         ve = velocity * np.sin(heading_rad)
+
+        # Accelerometer contribution
+
+        vn += accel_x * dt
+        ve += accel_y * dt
+
+        # Update velocity states
 
         self.x[3, 0] = vn
         self.x[4, 0] = ve
 
-        # Position propagation
+        # Dead reckoning position update
+
         self.x[0, 0] += vn * dt * 0.00001
         self.x[1, 0] += ve * dt * 0.00001
 
@@ -71,7 +80,6 @@ class ExtendedKalmanFilter:
         gps_heading
     ):
 
-        # First measurement initializes filter
         if not self.initialized:
 
             self.x[0, 0] = gps_lat
@@ -82,7 +90,6 @@ class ExtendedKalmanFilter:
             self.initialized = True
             return
 
-        # Measurement vector
         z = np.array([
             [gps_lat],
             [gps_lon],
@@ -90,7 +97,6 @@ class ExtendedKalmanFilter:
             [gps_heading]
         ])
 
-        # Measurement model
         H = np.array([
             [1, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0],
@@ -98,29 +104,26 @@ class ExtendedKalmanFilter:
             [0, 0, 0, 0, 0, 1]
         ])
 
-        # Innovation / residual
-        y = z - H @ self.x
+        y = z - (H @ self.x)
 
         self.last_residual = float(
             np.linalg.norm(y)
         )
 
-        # Innovation covariance
         S = H @ self.P @ H.T + self.R
 
-        # Kalman gain
         K = self.P @ H.T @ np.linalg.inv(S)
 
-        # State update
         self.x = self.x + K @ y
 
-        # Covariance update
         I = np.eye(6)
 
         self.P = (I - K @ H) @ self.P
 
     def get_state(self):
+
         return self.x
 
     def get_residual(self):
+
         return self.last_residual
