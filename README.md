@@ -319,13 +319,11 @@ docs/screenshots/trust-aware-fusion.png
 
 Recommended GitHub badges:
 
-```md
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38B2AC?logo=tailwindcss&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![Edge AI](https://img.shields.io/badge/Edge_AI-Raspberry_Pi_5_|_Jetson_Nano-19d3ff)
-```
 
 ---
 
