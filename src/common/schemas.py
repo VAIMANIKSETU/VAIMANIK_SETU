@@ -34,6 +34,7 @@ class TrustData:
     trust_score: float
     attack_detected: bool
     gps_trusted: bool
+    severity: str
     
 
 @dataclass

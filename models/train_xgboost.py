@@ -146,4 +146,4 @@ if aircraft_encoder is not None:
         os.path.join(save_dir, "aircraft_encoder.pkl")
     )
 
-print("\nXGBoost model saved successfully.")
+print("XGBoost model saved successfully.")
