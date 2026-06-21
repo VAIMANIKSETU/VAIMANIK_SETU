@@ -1,36 +1,98 @@
 import pandas as pd
-from sklearn.ensemble import IsolationForest
+import numpy as np
 import joblib
 import os
 
-# Load sample data
-df = pd.read_csv("data/sample_data.csv")
+from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import LabelEncoder
 
-# Remove attack label column
-X = df.drop("attack_label", axis=1)
+# ==========================================
+# Load Dataset
+# ==========================================
+df = pd.read_csv("data/processed/features_60k.csv")
 
-# Create Isolation Forest model
+# ==========================================
+# Encode aircraft column
+# ==========================================
+aircraft_encoder = None
+
+if "aircraft" in df.columns:
+    aircraft_encoder = LabelEncoder()
+    df["aircraft"] = aircraft_encoder.fit_transform(df["aircraft"])
+
+# ==========================================
+# Convert timestamp to numeric
+# ==========================================
+if "timestamp" in df.columns:
+
+    df["timestamp"] = pd.to_datetime(
+        df["timestamp"],
+        errors="coerce"
+    )
+
+    df["timestamp"] = df["timestamp"].ffill()
+
+    df = df.dropna(subset=["timestamp"])
+
+    df["timestamp"] = (
+        df["timestamp"].astype("int64") // 10**9
+    )
+
+# ==========================================
+# Feature Engineering
+# ==========================================
+df["speed_diff"] = abs(df["gps_speed"] - df["imu_speed"])
+
+df["lat_diff"] = abs(df["gps_lat"] - df["imu_lat"])
+
+df["lon_diff"] = abs(df["gps_lon"] - df["imu_lon"])
+
+df["alt_diff"] = abs(df["gps_alt"] - df["barometer_alt"])
+
+df["accel_magnitude"] = np.sqrt(
+    df["accel_x"]**2 +
+    df["accel_y"]**2 +
+    df["accel_z"]**2
+)
+
+df["gyro_magnitude"] = np.sqrt(
+    df["gyro_x"]**2 +
+    df["gyro_y"]**2 +
+    df["gyro_z"]**2
+)
+
+# ==========================================
+# Train only on normal flights
+# ==========================================
+normal_df = df[df["attack_label"] == 0]
+
+X_train = normal_df.drop("attack_label", axis=1)
+
+print("Training samples:", len(X_train))
+
+# ==========================================
+# Create Isolation Forest
+# ==========================================
 model = IsolationForest(
-    n_estimators=100,
-    contamination=0.1,
+    n_estimators=200,
+    contamination=0.01,
     random_state=42
 )
 
-# Train model
-model.fit(X)
+# ==========================================
+# Train Model
+# ==========================================
+model.fit(X_train)
 
-# Predict anomalies
-predictions = model.predict(X)
-
-print("Predictions:")
-print(predictions)
-
-# Create save directory
-save_dir = os.path.join(os.path.dirname(__file__), "saved_models")
+# ==========================================
+# Save Model
+# ==========================================
+save_dir = "models/saved_models"
 os.makedirs(save_dir, exist_ok=True)
 
-# Save model
-model_path = os.path.join(save_dir, "iso_model.pkl")
-joblib.dump(model, model_path)
+joblib.dump(
+    model,
+    os.path.join(save_dir, "iso_model.pkl")
+)
 
-print("Isolation Forest model saved successfully.")
+print("\nIsolation Forest model saved successfully.")
