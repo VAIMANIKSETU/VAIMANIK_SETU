@@ -159,6 +159,10 @@ export function nextDemoSnapshot(mode: SimulationMode): DashboardSnapshot {
 
   const telemetry: Telemetry = {
     timestamp: now,
+    truePosition: {
+      lat: routeLat,
+      lon: routeLon
+    },
     gps: {
       lat: routeLat + (mode === "normal" ? gpsOffset * 0.05 : gpsOffset),
       lon: routeLon + (mode === "jamming" ? -gpsOffset * 0.3 : gpsOffset * 0.55)

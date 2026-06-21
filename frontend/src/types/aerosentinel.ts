@@ -8,6 +8,7 @@ export interface Coordinate {
 
 export interface Telemetry {
   timestamp: string;
+  truePosition?: Coordinate;
   gps: Coordinate;
   fused: Coordinate;
   altitude: number;
