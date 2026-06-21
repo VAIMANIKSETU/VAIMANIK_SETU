@@ -352,7 +352,3 @@ AeroSentinel is relevant to systems where GPS cannot be blindly trusted:
 - Robotics: robust outdoor navigation for field robots and mobile agents.
 
 ---
-
-## License
-
-This project is suitable for release under the MIT License for open-source research, hackathon, and portfolio use. Add a `LICENSE` file before public distribution if the repository is published.
