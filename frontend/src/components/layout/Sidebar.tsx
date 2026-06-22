@@ -22,14 +22,14 @@ export function Sidebar({ collapsed, setCollapsed, trustScore, activeThreats }: 
   return (
     <motion.aside
       animate={{ width: collapsed ? 72 : 320 }}
-      className="fixed inset-y-0 left-0 z-40 hidden border-r border-white/10 bg-[#050816]/92 shadow-2xl shadow-black/40 backdrop-blur-2xl lg:flex"
+      className="fixed inset-y-0 left-0 z-40 hidden border-r border-slate-700/50 bg-obsidian/95 shadow-2xl shadow-black/35 backdrop-blur-2xl lg:flex"
       initial={false}
       transition={{ duration: 0.26, ease: "easeInOut" }}
     >
       <div className="flex h-full w-full flex-col overflow-hidden px-3 py-4">
         <div className={`mb-6 flex gap-3 ${collapsed ? "flex-col items-center" : "items-center justify-between"}`}>
           <a href="#mission-overview" className={`flex min-w-0 items-center gap-3 rounded-md px-1 py-2 ${collapsed ? "justify-center" : "flex-1"}`}>
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-cyanline/35 bg-cyanline/10 text-cyanline shadow-glow">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-slate-600/50 bg-panel text-cyanline shadow-glow">
               <ShieldCheck size={22} />
             </div>
             <AnimatePresence initial={false}>
@@ -41,15 +41,15 @@ export function Sidebar({ collapsed, setCollapsed, trustScore, activeThreats }: 
                   initial={{ opacity: 0, x: -8 }}
                   transition={{ duration: 0.18 }}
                 >
-                  <div className="truncate text-sm font-bold tracking-[0.22em] text-white">AEROSENTINEL</div>
-                  <div className="truncate text-xs text-slate-400">Trust-Aware Mission Control</div>
+                  <div className="truncate text-sm font-bold tracking-[0.2em] text-white">AEROSENTINEL</div>
+                  <div className="truncate text-xs text-slate-400">Mission Intelligence Platform</div>
                 </motion.div>
               )}
             </AnimatePresence>
           </a>
           <button
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-md border border-white/10 bg-white/[0.04] text-slate-300 transition hover:border-cyanline/40 hover:text-white"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-slate-700/70 bg-panel/70 text-slate-300 transition hover:border-cyanline/50 hover:text-white"
             type="button"
             onClick={() => setCollapsed(!collapsed)}
           >
@@ -62,8 +62,8 @@ export function Sidebar({ collapsed, setCollapsed, trustScore, activeThreats }: 
               href={href}
               key={label}
               title={collapsed ? label : undefined}
-              className={`group flex h-12 items-center gap-3 rounded-md px-3 text-sm text-slate-300 transition hover:bg-white/[0.07] hover:text-white ${
-                index === 0 ? "bg-cyanline/10 text-cyan-100" : ""
+              className={`group flex h-12 items-center gap-3 rounded-lg px-3 text-sm text-slate-300 transition hover:bg-white/[0.06] hover:text-white ${
+                index === 0 ? "bg-cyanline/10 text-blue-100" : ""
               }`}
             >
               <Icon size={18} className="shrink-0" />
@@ -87,14 +87,14 @@ export function Sidebar({ collapsed, setCollapsed, trustScore, activeThreats }: 
           {!collapsed && (
             <motion.div
               animate={{ opacity: 1, y: 0 }}
-              className="mt-auto space-y-3 rounded-lg border border-white/10 bg-white/[0.035] p-4 text-xs text-slate-400"
+              className="mt-auto space-y-3 rounded-xl border border-slate-700/60 bg-panel/65 p-4 text-xs text-slate-400"
               exit={{ opacity: 0, y: 8 }}
               initial={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.2 }}
             >
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 text-slate-300"><HeartPulse size={14} /> Mission State</span>
-                <span className="text-cyanline">{Math.round(trustScore)}%</span>
+                <span className="font-semibold text-cyanline">{Math.round(trustScore)}%</span>
               </div>
               <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
                 <motion.div

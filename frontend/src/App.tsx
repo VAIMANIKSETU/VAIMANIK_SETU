@@ -28,8 +28,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-obsidian text-slate-100">
-      <div className="fixed inset-0 bg-radar-grid opacity-70" />
-      <div className="fixed inset-x-0 top-0 h-48 bg-gradient-to-b from-cyanline/12 to-transparent" />
+      <div className="fixed inset-0 bg-radar-grid opacity-90" />
+      <div className="fixed inset-x-0 top-0 h-56 bg-gradient-to-b from-cyanline/10 to-transparent" />
       <div className="relative flex min-h-screen">
         <Sidebar
           collapsed={sidebarCollapsed}
@@ -43,23 +43,26 @@ export default function App() {
           }`}
         >
           <TopStatusBar health={health} telemetry={telemetry} backendOnline={backendOnline} />
-          <div className="mx-auto max-w-[1800px] space-y-4 p-4">
+          <div className="mx-auto max-w-[1840px] space-y-5 p-4 xl:p-5">
+            <section id="mission-overview" className="grid gap-5 2xl:grid-cols-[minmax(0,2.15fr)_minmax(360px,0.72fr)]">
+              <MissionMap telemetry={telemetry} history={history} trust={trust} threats={threats} alerts={alerts} />
+              <div className="grid gap-5 lg:grid-cols-2 2xl:grid-cols-1">
+                <TrustEnginePanel trust={trust} threats={threats} />
+                <ThreatDetectionPanel threats={threats} />
+                <TrustAwareFusionPanel trust={trust} />
+              </div>
+            </section>
+
             <section id="ai-command">
               <AICommandCenter telemetry={telemetry} trust={trust} threats={threats} mode={mode} />
             </section>
 
-            <section id="mission-overview" className="grid gap-4 2xl:grid-cols-[minmax(0,1.8fr)_minmax(360px,0.72fr)]">
-              <MissionMap telemetry={telemetry} history={history} trust={trust} threats={threats} alerts={alerts} />
-              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-1">
-                <TrustEnginePanel trust={trust} threats={threats} />
-                <TrustAwareFusionPanel trust={trust} />
+            <section id="sensor-status" className="grid gap-5 xl:grid-cols-[minmax(340px,0.75fr)_minmax(0,1.35fr)]">
+              <div className="grid gap-5">
                 <MissionExplanationPanel trust={trust} />
+                <SensorFusionPanel telemetry={telemetry} />
               </div>
-            </section>
-
-            <section id="sensor-status" className="grid gap-4 xl:grid-cols-[minmax(340px,0.9fr)_minmax(0,1.4fr)]">
-              <SensorFusionPanel telemetry={telemetry} />
-              <div className="grid gap-4">
+              <div className="grid gap-5">
                 <SimulationControls
                   mode={mode}
                   setMode={controls.setMode}
@@ -77,16 +80,13 @@ export default function App() {
               <RealtimeCharts history={history} />
             </section>
 
-            <section id="explainability" className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <section id="explainability" className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
               <ExplainabilityDashboard telemetry={telemetry} trust={trust} />
               <AdvancedAnalyticsPanel history={history} threats={threats} />
             </section>
 
-            <section id="alerts" className="grid gap-4 xl:grid-cols-[minmax(340px,0.9fr)_minmax(0,1.4fr)]">
-              <ThreatDetectionPanel threats={threats} />
-              <div className="grid gap-4">
-                <AlertCenter alerts={alerts} />
-              </div>
+            <section id="alerts">
+              <AlertCenter alerts={alerts} />
             </section>
 
             <section id="system-health">

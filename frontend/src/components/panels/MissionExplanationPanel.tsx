@@ -37,7 +37,7 @@ export function MissionExplanationPanel({ trust }: MissionExplanationPanelProps)
       <motion.div
         key={explanation.title}
         animate={{ opacity: 1, y: 0 }}
-        className="flex gap-3 rounded-md border border-white/10 bg-white/[0.035] p-4"
+        className="flex gap-3 rounded-xl border border-slate-700/60 bg-obsidian/35 p-4"
         initial={{ opacity: 0, y: 8 }}
         transition={{ duration: 0.32 }}
       >

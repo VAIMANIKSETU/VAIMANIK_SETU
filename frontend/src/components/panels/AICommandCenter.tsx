@@ -76,49 +76,70 @@ export function AICommandCenter({ telemetry, trust, threats, mode }: AICommandCe
   ];
 
   return (
-    <Panel title="AI Command Center" className="ai-command-panel">
-      <div className="grid gap-4 2xl:grid-cols-[0.9fr_1.1fr_1fr]">
-        <div className="rounded-lg border border-cyanline/20 bg-cyanline/[0.055] p-5">
+    <Panel title="AI Copilot" className="ai-command-panel">
+      <div className="grid gap-5 2xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-xl border border-cyanline/20 bg-cyanline/[0.055] p-5">
           <div className="mb-4 flex items-center gap-3">
             <BrainCircuit className="text-cyanline" size={26} />
             <div>
-              <div className="text-xs uppercase tracking-[0.18em] text-slate-400">AI Co-Pilot</div>
-              <div className="text-lg font-semibold text-white">Autonomous Response Online</div>
+              <div className="text-xs uppercase tracking-[0.18em] text-slate-400">Current Assessment</div>
+              <div className="text-2xl font-semibold text-white">{activeThreats.length ? "Threat Under Analysis" : "Navigation Secure"}</div>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Metric label="Navigation Trust" value={`${Math.round(trust.score)}%`} />
-            <Metric label="AI Confidence" value={`${Math.round(trust.confidence)}%`} />
-            <Metric label="Attack Probability" value={`${attackProbability}%`} danger={attackProbability > 45} />
-            <Metric label="System Health" value={`${scores.integrity}%`} />
-          </div>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <StatusCard icon={ShieldAlert} label="Threat Assessment" value={activeThreats.length ? "Threat Detected" : "Clear"} tone={activeThreats.length ? "danger" : "safe"} />
-          <StatusCard icon={Crosshair} label="Threat Classification" value={threatClass} tone={activeThreats.length ? "warning" : "trusted"} />
-          <StatusCard icon={Radar} label="Risk Prediction" value={`${riskLabel(trust.score)} Risk`} tone={trust.score < 45 ? "danger" : trust.score < 80 ? "warning" : "safe"} />
-          <StatusCard icon={Workflow} label="Response Status" value={trust.score < 60 ? "Mitigation Active" : "Monitoring"} tone={trust.score < 60 ? "trusted" : "safe"} />
-        </div>
-        <div className="space-y-3">
-          {[
-            ["GPS Trust", scores.gps, "bg-cyanline"],
-            ["IMU Trust", scores.imu, "bg-limepulse"],
-            ["Barometer Trust", scores.barometer, "bg-amberwarn"]
-          ].map(([label, value, color]) => (
-            <div key={label as string}>
-              <div className="mb-1 flex justify-between text-xs text-slate-400"><span>{label}</span><span>{value}%</span></div>
-              <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                <motion.div animate={{ width: `${value}%` }} className={`h-full rounded-full ${color}`} transition={{ duration: 0.55 }} />
+          <div className="grid gap-4 lg:grid-cols-[0.72fr_1fr]">
+            <div className="rounded-xl border border-slate-700/60 bg-obsidian/35 p-4">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-slate-500">Confidence</div>
+              <div className="mt-2 text-5xl font-semibold text-white">{Math.round(trust.confidence)}%</div>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                <motion.div animate={{ width: `${Math.round(trust.confidence)}%` }} className="h-full rounded-full bg-cyanline" transition={{ duration: 0.55 }} />
+              </div>
+              <div className={`mt-4 rounded-lg border px-3 py-2 text-sm font-semibold ${trust.score < 45 ? "border-danger/35 bg-danger/10 text-danger" : trust.score < 80 ? "border-amberwarn/35 bg-amberwarn/10 text-amberwarn" : "border-limepulse/30 bg-limepulse/10 text-limepulse"}`}>
+                {riskLabel(trust.score)} Risk
               </div>
             </div>
-          ))}
-          <div className="rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-slate-300">
-            {reasoning.map((line) => <div key={line}>- {line}</div>)}
+            <div className="space-y-3">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-slate-500">Reasoning</div>
+              {reasoning.map((line) => (
+                <div key={line} className="flex items-start gap-3 rounded-lg border border-slate-700/60 bg-obsidian/35 p-3 text-sm leading-6 text-slate-200">
+                  <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-limepulse" />
+                  <span>{line}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="grid gap-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <StatusCard icon={ShieldAlert} label="Threat Status" value={activeThreats.length ? "Threat Detected" : "Clear"} tone={activeThreats.length ? "danger" : "safe"} />
+            <StatusCard icon={Crosshair} label="Classification" value={threatClass} tone={activeThreats.length ? "warning" : "trusted"} />
+            <StatusCard icon={Radar} label="Attack Probability" value={`${attackProbability}%`} tone={attackProbability > 45 ? "danger" : attackProbability > 20 ? "warning" : "safe"} />
+            <StatusCard icon={Workflow} label="Response Status" value={trust.score < 60 ? "Mitigation Active" : "Monitoring"} tone={trust.score < 60 ? "trusted" : "safe"} />
+          </div>
+          <div className="rounded-xl border border-slate-700/60 bg-obsidian/35 p-4">
+            <div className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500">Sensor Trust Feed</div>
+            <div className="space-y-3">
+              {[
+                ["GPS Trust", scores.gps, "bg-cyanline"],
+                ["IMU Trust", scores.imu, "bg-limepulse"],
+                ["Barometer Trust", scores.barometer, "bg-amberwarn"]
+              ].map(([label, value, color]) => (
+                <div key={label as string}>
+                  <div className="mb-1 flex justify-between text-xs text-slate-400"><span>{label}</span><span>{value}%</span></div>
+                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                    <motion.div animate={{ width: `${value}%` }} className={`h-full rounded-full ${color}`} transition={{ duration: 0.55 }} />
+                  </div>
+                </div>
+              ))}
+              <div className="rounded-lg border border-slate-700/60 bg-white/[0.03] p-3">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-slate-500">System Integrity</div>
+                <div className="mt-1 text-2xl font-semibold text-white">{scores.integrity}%</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="mt-4 grid gap-4 xl:grid-cols-[1fr_1fr]">
-        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
+      <div className="mt-5 grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
+        <div className="rounded-xl border border-slate-700/60 bg-obsidian/35 p-4">
           <div className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500">Recommended Actions</div>
           <div className="space-y-2">
             {recommendations.map((action) => (
@@ -126,12 +147,12 @@ export function AICommandCenter({ telemetry, trust, threats, mode }: AICommandCe
             ))}
           </div>
         </div>
-        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-          <div className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500">Decision Timeline</div>
-          <div className="grid gap-2 sm:grid-cols-5">
+        <div className="rounded-xl border border-slate-700/60 bg-obsidian/35 p-4">
+          <div className="mb-4 text-xs uppercase tracking-[0.16em] text-slate-500">Mission Decision Timeline</div>
+          <div className="grid gap-3 sm:grid-cols-5">
             {timeline.map((event, index) => (
-              <div key={`${event}-${index}`} className="rounded-md border border-white/10 bg-black/20 p-2 text-xs text-slate-300">
-                <span className="mb-1 block text-cyanline">0{index + 1}</span>
+              <div key={`${event}-${index}`} className="relative rounded-lg border border-slate-700/60 bg-black/20 p-3 text-xs leading-5 text-slate-300">
+                <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.16em] text-cyanline">T+0{index + 1}</span>
                 {event}
               </div>
             ))}
@@ -139,15 +160,6 @@ export function AICommandCenter({ telemetry, trust, threats, mode }: AICommandCe
         </div>
       </div>
     </Panel>
-  );
-}
-
-function Metric({ label, value, danger = false }: { label: string; value: string; danger?: boolean }) {
-  return (
-    <div className="rounded-md border border-white/10 bg-black/20 p-3">
-      <div className="text-[10px] uppercase tracking-[0.14em] text-slate-500">{label}</div>
-      <div className={`mt-1 text-2xl font-semibold ${danger ? "text-danger" : "text-white"}`}>{value}</div>
-    </div>
   );
 }
 
@@ -163,14 +175,14 @@ function StatusCard({
   tone: "safe" | "warning" | "danger" | "trusted";
 }) {
   const toneClass = {
-    safe: "text-limepulse border-limepulse/25 bg-limepulse/8",
-    warning: "text-amberwarn border-amberwarn/30 bg-amberwarn/8",
+    safe: "text-limepulse border-limepulse/25 bg-limepulse/10",
+    warning: "text-amberwarn border-amberwarn/30 bg-amberwarn/10",
     danger: "text-danger border-danger/35 bg-danger/10",
-    trusted: "text-cyanline border-cyanline/30 bg-cyanline/8"
+    trusted: "text-cyanline border-cyanline/30 bg-cyanline/10"
   };
 
   return (
-    <div className={`rounded-md border p-4 ${toneClass[tone]}`}>
+    <div className={`rounded-xl border p-4 transition duration-300 hover:-translate-y-0.5 ${toneClass[tone]}`}>
       <Icon size={18} />
       <div className="mt-3 text-[10px] uppercase tracking-[0.14em] text-slate-400">{label}</div>
       <div className="mt-1 text-sm font-semibold text-slate-100">{value}</div>

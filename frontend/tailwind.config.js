@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        obsidian: "#050816",
-        panel: "rgba(12, 18, 34, 0.72)",
-        cyanline: "#19d3ff",
-        limepulse: "#82f27e",
-        amberwarn: "#f4c542",
-        danger: "#ff4d6d"
+        obsidian: "#0B1020",
+        panel: "#131A2E",
+        cyanline: "#3B82F6",
+        limepulse: "#22C55E",
+        amberwarn: "#F59E0B",
+        danger: "#EF4444"
       },
       boxShadow: {
-        glow: "0 0 32px rgba(25, 211, 255, 0.18)",
-        alert: "0 0 28px rgba(255, 77, 109, 0.18)"
+        glow: "0 18px 60px rgba(2, 6, 23, 0.32)",
+        alert: "0 18px 52px rgba(239, 68, 68, 0.16)"
       },
       animation: {
         sweep: "sweep 3.2s linear infinite",
