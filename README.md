@@ -4,6 +4,129 @@ Edge AI for Trust-Aware Autonomous Sensor Fusion Against GPS Spoofing
 
 ---
 
+## AI Command Center Enhancement
+
+The dashboard now includes an AI-first command center that acts like an intelligent aerospace co-pilot. It summarizes navigation trust, AI confidence, attack probability, risk prediction, autonomous response status, and recommended actions in one prominent mission-control panel.
+
+The AI Command Center continuously explains:
+
+- Why GPS is trusted or rejected.
+- Which sensors disagree.
+- Which features triggered a threat.
+- What mitigation actions are active.
+- How confident the system is in the current decision.
+
+---
+
+## Enhanced AI Pipeline
+
+```mermaid
+flowchart LR
+    A[Real Telemetry Stream] --> C[Feature Extraction]
+    B[Spoofed Telemetry Stream] --> C
+    C --> D[Isolation Forest]
+    C --> E[XGBoost Trust Engine]
+    C --> F[Autoencoder Detection]
+    D --> G[AI Command Center]
+    E --> G
+    F --> G
+    G --> H[Trust-Aware Fusion]
+    H --> I[Autonomous Response]
+    I --> J[Mission Dashboard]
+```
+
+The current frontend simulation visualizes model outputs and trust behavior while remaining compatible with the existing backend APIs and saved model workflow.
+
+---
+
+## Spoofing Simulator Overview
+
+The real-time simulator now generates two parallel telemetry streams:
+
+- Real telemetry: GPS, velocity, heading, altitude, IMU readings, temperature, and barometer values.
+- Spoofed telemetry: independently generated hostile telemetry used to simulate GPS attacks.
+
+Supported scenarios:
+
+- Coordinate Jump Attack
+- Gradual Drift Attack
+- Replay Attack
+- Delay Attack
+- Velocity Spoof Attack
+- Altitude Spoof Attack
+- Heading Manipulation Attack
+- Mixed Multi-Vector Attack
+- Adaptive Intelligent Spoofing
+- Sensor Failure Simulation
+
+Controls include start attack, stop attack, attack type selection, severity control, duration control, and real-vs-spoofed comparison through map and analytics panels.
+
+---
+
+## Explainable AI Workflow
+
+```mermaid
+flowchart TD
+    A[Telemetry Mismatch] --> B[Feature Importance]
+    B --> C[Root Cause Analysis]
+    C --> D[Attack Attribution]
+    D --> E[Detection Confidence]
+    E --> F[Recommended Mitigation]
+    F --> G[Operator Explanation]
+```
+
+The Explainable AI dashboard surfaces velocity mismatch, heading error, altitude conflict, sensor drift, detection confidence, trust breakdown, and attack attribution so decisions are transparent during demonstrations.
+
+---
+
+## Docker Deployment Guide
+
+The repository includes container-oriented deployment assets for edge demonstrations.
+
+Frontend container flow:
+
+```bash
+cd frontend
+docker build -t aerosentinel-dashboard .
+docker run -p 5173:5173 aerosentinel-dashboard
+```
+
+Compose flow:
+
+```bash
+docker compose up --build
+```
+
+Recommended production setup:
+
+- Serve the frontend as static files from `frontend/dist`.
+- Run the Python trust and fusion backend as a separate service.
+- Keep API endpoints on the same LAN for Raspberry Pi 5 or Jetson Nano demos.
+- Use `VITE_API_BASE_URL` to point the dashboard at Flask or FastAPI.
+
+---
+
+## Demo Walkthrough
+
+1. Start in Normal Flight and observe high navigation trust.
+2. Open the AI Command Center and confirm GPS is trusted.
+3. Start a Gradual Drift or Coordinate Jump attack.
+4. Watch the red spoofed route diverge from the green real route.
+5. Confirm the blue AI-corrected route remains stable.
+6. Observe trust degradation, attack classification, and recommended actions.
+7. Review the Explainable AI panel for root cause and feature attribution.
+8. Stop the attack and confirm trust recovery.
+
+---
+
+## Documentation Improvements Added
+
+- Appended AI Command Center architecture.
+- Added simulator attack-mode documentation.
+- Added explainable AI workflow.
+- Added Docker deployment guidance.
+- Added demo walkthrough for hackathons, portfolio reviews, and aerospace competitions.
+
 ## Overview
 
 AeroSentinel is an AI-powered navigation trust monitoring system for UAVs, autonomous vehicles, robotics platforms, and edge aerospace systems. It addresses a critical weakness in GPS-dependent autonomy: a vehicle can receive valid-looking GPS coordinates that are intentionally false.

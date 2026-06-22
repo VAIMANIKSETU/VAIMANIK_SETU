@@ -175,6 +175,14 @@ a:focus-visible {
   box-shadow: 0 26px 90px rgba(255, 77, 109, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
+.ai-command-panel {
+  border-color: rgba(25, 211, 255, 0.24);
+  background:
+    linear-gradient(135deg, rgba(25, 211, 255, 0.12), rgba(5, 8, 22, 0.26) 34%, rgba(130, 242, 126, 0.055)),
+    linear-gradient(145deg, rgba(13, 21, 38, 0.92), rgba(6, 10, 22, 0.78));
+  box-shadow: 0 30px 110px rgba(25, 211, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
 @keyframes pathPulse {
   0%,
   100% {

@@ -3,9 +3,12 @@ import { RealtimeCharts } from "./components/charts/RealtimeCharts";
 import { Sidebar } from "./components/layout/Sidebar";
 import { TopStatusBar } from "./components/layout/TopStatusBar";
 import { MissionMap } from "./components/map/MissionMap";
+import { AdvancedAnalyticsPanel } from "./components/panels/AdvancedAnalyticsPanel";
+import { AICommandCenter } from "./components/panels/AICommandCenter";
 import { AiInsightsPanel } from "./components/panels/AiInsightsPanel";
 import { AlertCenter } from "./components/panels/AlertCenter";
 import { DeploymentPanel } from "./components/panels/DeploymentPanel";
+import { ExplainabilityDashboard } from "./components/panels/ExplainabilityDashboard";
 import { MissionExplanationPanel } from "./components/panels/MissionExplanationPanel";
 import { SensorFusionPanel } from "./components/panels/SensorFusionPanel";
 import { SimulationControls } from "./components/panels/SimulationControls";
@@ -41,6 +44,10 @@ export default function App() {
         >
           <TopStatusBar health={health} telemetry={telemetry} backendOnline={backendOnline} />
           <div className="mx-auto max-w-[1800px] space-y-4 p-4">
+            <section id="ai-command">
+              <AICommandCenter telemetry={telemetry} trust={trust} threats={threats} mode={mode} />
+            </section>
+
             <section id="mission-overview" className="grid gap-4 2xl:grid-cols-[minmax(0,1.8fr)_minmax(360px,0.72fr)]">
               <MissionMap telemetry={telemetry} history={history} trust={trust} threats={threats} alerts={alerts} />
               <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-1">
@@ -53,13 +60,26 @@ export default function App() {
             <section id="sensor-status" className="grid gap-4 xl:grid-cols-[minmax(340px,0.9fr)_minmax(0,1.4fr)]">
               <SensorFusionPanel telemetry={telemetry} />
               <div className="grid gap-4">
-                <SimulationControls mode={mode} setMode={controls.setMode} reset={controls.reset} />
+                <SimulationControls
+                  mode={mode}
+                  setMode={controls.setMode}
+                  simulationSettings={controls.simulationSettings}
+                  setSimulationSettings={controls.setSimulationSettings}
+                  startAttack={controls.startAttack}
+                  stopAttack={controls.stopAttack}
+                  reset={controls.reset}
+                />
                 <AiInsightsPanel insights={insights} />
               </div>
             </section>
 
             <section id="trust-engine">
               <RealtimeCharts history={history} />
+            </section>
+
+            <section id="explainability" className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <ExplainabilityDashboard telemetry={telemetry} trust={trust} />
+              <AdvancedAnalyticsPanel history={history} threats={threats} />
             </section>
 
             <section id="alerts" className="grid gap-4 xl:grid-cols-[minmax(340px,0.9fr)_minmax(0,1.4fr)]">

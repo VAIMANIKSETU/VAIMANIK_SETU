@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Bell, ChevronLeft, ChevronRight, Cpu, Gauge, HeartPulse, Radar, Route, ShieldCheck } from "lucide-react";
+import { Bell, BrainCircuit, ChevronLeft, ChevronRight, Cpu, Gauge, HeartPulse, Radar, Route, ShieldCheck } from "lucide-react";
 
 const navItems = [
+  { label: "AI Command", icon: BrainCircuit, href: "#ai-command" },
   { label: "Mission Overview", icon: Radar, href: "#mission-overview" },
   { label: "Trust Engine", icon: Gauge, href: "#trust-engine" },
   { label: "Sensor Status", icon: Route, href: "#sensor-status" },
+  { label: "Explainability", icon: ShieldCheck, href: "#explainability" },
   { label: "Alerts", icon: Bell },
   { label: "System Health", icon: Cpu, href: "#system-health" }
 ];

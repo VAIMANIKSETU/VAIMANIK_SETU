@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { api } from "../api/client";
 import { nextDemoSnapshot, resetDemoTelemetry } from "../mocks/telemetry";
-import type { DashboardSnapshot, SimulationMode } from "../types/aerosentinel";
+import type { DashboardSnapshot, SimulationMode, SimulationSettings } from "../types/aerosentinel";
 
 export function useDashboardData() {
   const [mode, setMode] = useState<SimulationMode>("normal");
+  const [simulationSettings, setSimulationSettings] = useState<SimulationSettings>({
+    active: false,
+    attackType: "spoofing",
+    severity: 70,
+    durationSeconds: 60
+  });
   const [snapshot, setSnapshot] = useState<DashboardSnapshot>(() => nextDemoSnapshot("normal"));
   const [backendOnline, setBackendOnline] = useState(false);
 
@@ -13,7 +19,9 @@ export function useDashboardData() {
     const controller = new AbortController();
 
     async function refresh() {
-      if (!api.demoPreferred && mode === "normal") {
+      const activeMode = simulationSettings.active ? simulationSettings.attackType : mode;
+
+      if (!api.demoPreferred && activeMode === "normal") {
         try {
           const [telemetry, trust, alerts, threats, health] = await Promise.all([
             api.telemetry(controller.signal),
@@ -42,7 +50,7 @@ export function useDashboardData() {
       }
 
       if (mounted) {
-        setSnapshot(nextDemoSnapshot(mode));
+        setSnapshot(nextDemoSnapshot(activeMode, simulationSettings));
       }
     }
 
@@ -53,19 +61,30 @@ export function useDashboardData() {
       controller.abort();
       window.clearInterval(timer);
     };
-  }, [mode]);
+  }, [mode, simulationSettings]);
 
   const controls = useMemo(
     () => ({
       setMode,
+      simulationSettings,
+      setSimulationSettings,
+      startAttack: () => {
+        setSimulationSettings((previous) => ({ ...previous, active: true }));
+        setMode(simulationSettings.attackType);
+      },
+      stopAttack: () => {
+        setSimulationSettings((previous) => ({ ...previous, active: false }));
+        setMode("normal");
+      },
       reset: () => {
         resetDemoTelemetry();
         setMode("normal");
+        setSimulationSettings((previous) => ({ ...previous, active: false }));
         setSnapshot(nextDemoSnapshot("normal"));
       }
     }),
-    []
+    [simulationSettings]
   );
 
-  return { snapshot, mode, controls, backendOnline };
+  return { snapshot, mode: simulationSettings.active ? simulationSettings.attackType : mode, controls, backendOnline };
 }

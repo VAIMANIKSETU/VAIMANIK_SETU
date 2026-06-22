@@ -116,6 +116,12 @@ export function MissionMap({ telemetry, history, trust, threats, alerts }: Missi
   const activeThreats = threats.filter((threat) => threat.active);
   const center = pointFor(telemetry, "fused");
   const spoofingActive = activeThreats.some((threat) => threat.type === "GPS Spoofing");
+  const attackOrigin = gpsPath[Math.max(0, gpsPath.length - 12)] ?? pointFor(telemetry, "gps");
+  const headingRadians = (telemetry.heading * Math.PI) / 180;
+  const predictedFuturePath: [number, number][] = Array.from({ length: 5 }, (_, index) => {
+    const distance = (index + 1) * 0.00022;
+    return [center[0] + Math.cos(headingRadians) * distance, center[1] + Math.sin(headingRadians) * distance];
+  });
 
   return (
     <Panel
@@ -146,6 +152,7 @@ export function MissionMap({ telemetry, history, trust, threats, alerts }: Missi
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Circle center={center} radius={260} pathOptions={{ color: "#82f27e", fillOpacity: 0.05, weight: 1 }} />
+          <Circle center={[center[0] + 0.0014, center[1] - 0.0013]} radius={180} pathOptions={{ color: "#f4c542", fillOpacity: 0.08, weight: 1.2, dashArray: "6 8" }} />
           <Circle
             center={center}
             radius={trust.severity === "critical" ? 620 : trust.severity === "warning" ? 430 : 320}
@@ -154,6 +161,12 @@ export function MissionMap({ telemetry, history, trust, threats, alerts }: Missi
           <Polyline positions={truePath} pathOptions={{ className: "path-glow path-true", color: "#82f27e", weight: 4, opacity: 0.9 }} />
           <Polyline positions={gpsPath} pathOptions={{ className: "path-glow path-gps", color: "#ff4d6d", weight: 4, opacity: 0.88 }} />
           <Polyline positions={fusedPath} pathOptions={{ className: "path-glow path-fused", color: "#19d3ff", weight: 5, opacity: 0.92 }} />
+          <Polyline positions={[center, ...predictedFuturePath]} pathOptions={{ color: "#9dd7ff", weight: 3, opacity: 0.75, dashArray: "4 10" }} />
+          {spoofingActive && (
+            <CircleMarker center={attackOrigin} radius={12} pathOptions={{ color: "#ff4d6d", fillOpacity: 0.35, weight: 2 }}>
+              <Popup>Estimated attack origin point</Popup>
+            </CircleMarker>
+          )}
           <Marker position={pointFor(telemetry, "gps")} icon={dotIcon("gps-marker")}>
             <Popup>GPS fix - drift {telemetry.gpsDriftMeters.toFixed(1)} m</Popup>
           </Marker>
