@@ -7,16 +7,16 @@ interface MetricPillProps {
 }
 
 const toneClass = {
-  normal: "border-limepulse/35 text-limepulse",
-  warning: "border-amberwarn/45 text-amberwarn",
-  critical: "border-danger/50 text-danger",
-  neutral: "border-cyanline/35 text-cyan-100"
+  normal: "border-limepulse/30 text-limepulse",
+  warning: "border-amberwarn/35 text-amberwarn",
+  critical: "border-danger/40 text-danger",
+  neutral: "border-slate-600/50 text-slate-100"
 };
 
 export function MetricPill({ label, value, tone = "neutral" }: MetricPillProps) {
   return (
-    <div className={`rounded-md border bg-white/[0.03] px-3 py-2 ${toneClass[tone]}`}>
-      <div className="text-[10px] uppercase tracking-[0.16em] text-slate-400">{label}</div>
+    <div className={`rounded-lg border bg-panel/60 px-3 py-2 shadow-sm shadow-black/10 ${toneClass[tone]}`}>
+      <div className="text-[10px] uppercase tracking-[0.14em] text-slate-500">{label}</div>
       <div className="mt-1 truncate text-sm font-semibold">{value}</div>
     </div>
   );

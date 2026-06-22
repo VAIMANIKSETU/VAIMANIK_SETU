@@ -9,16 +9,16 @@ interface TrustEnginePanelProps {
 }
 
 const severityStyles = {
-  normal: "text-limepulse border-limepulse/40 bg-limepulse/10",
-  warning: "text-amberwarn border-amberwarn/40 bg-amberwarn/10",
-  critical: "text-danger border-danger/40 bg-danger/10"
+  normal: "text-limepulse border-limepulse/35 bg-limepulse/10",
+  warning: "text-amberwarn border-amberwarn/35 bg-amberwarn/10",
+  critical: "text-danger border-danger/35 bg-danger/10"
 } as const;
 
 function gaugeColor(score: number) {
-  if (score >= 90) return "#82f27e";
-  if (score >= 60) return "#f4c542";
-  if (score >= 30) return "#ff9f43";
-  return "#ff4d6d";
+  if (score >= 90) return "#22C55E";
+  if (score >= 60) return "#F59E0B";
+  if (score >= 30) return "#F97316";
+  return "#EF4444";
 }
 
 export function TrustEnginePanel({ trust, threats }: TrustEnginePanelProps) {
@@ -31,9 +31,9 @@ export function TrustEnginePanel({ trust, threats }: TrustEnginePanelProps) {
   return (
     <Panel title="Trust Engine">
       <div className="grid place-items-center">
-        <div className="relative h-36 w-36">
+        <div className="relative h-44 w-44 rounded-full border border-slate-700/60 bg-obsidian/40 p-3 shadow-inner shadow-black/25">
           <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="48" stroke="rgba(255,255,255,0.09)" strokeWidth="10" fill="none" />
+            <circle cx="60" cy="60" r="48" stroke="rgba(148,163,184,0.14)" strokeWidth="10" fill="none" />
             <motion.circle
               cx="60"
               cy="60"
@@ -53,7 +53,7 @@ export function TrustEnginePanel({ trust, threats }: TrustEnginePanelProps) {
               <motion.div
                 key={score}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="text-4xl font-bold text-white"
+                className="text-5xl font-bold text-white"
                 initial={{ opacity: 0, y: 8, scale: 0.96 }}
                 transition={{ duration: 0.28 }}
               >
@@ -64,17 +64,17 @@ export function TrustEnginePanel({ trust, threats }: TrustEnginePanelProps) {
           </div>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <div className={`rounded-md border px-3 py-2 text-center text-sm font-semibold capitalize ${severityStyles[trust.severity]}`}>
+      <div className="mt-5 grid grid-cols-2 gap-3">
+        <div className={`rounded-lg border px-3 py-3 text-center text-sm font-semibold capitalize ${severityStyles[trust.severity]}`}>
           Severity: {trust.severity}
         </div>
-        <div className="rounded-md border border-cyanline/25 bg-cyanline/8 px-3 py-2 text-center text-sm text-cyan-100">
+        <div className="rounded-lg border border-cyanline/25 bg-cyanline/10 px-3 py-3 text-center text-sm text-cyan-100">
           {Math.round(trust.confidence)}% confidence
         </div>
-        <div className={`rounded-md border px-3 py-2 text-center text-sm font-semibold ${gpsTrusted ? severityStyles.normal : severityStyles.critical}`}>
+        <div className={`rounded-lg border px-3 py-3 text-center text-sm font-semibold ${gpsTrusted ? severityStyles.normal : severityStyles.critical}`}>
           GPS {gpsTrusted ? "Trusted" : "Rejected"}
         </div>
-        <div className={`rounded-md border px-3 py-2 text-center text-sm font-semibold ${attackActive ? severityStyles.critical : severityStyles.normal}`}>
+        <div className={`rounded-lg border px-3 py-3 text-center text-sm font-semibold ${attackActive ? severityStyles.critical : severityStyles.normal}`}>
           Attack {attackActive ? "Active" : "Clear"}
         </div>
       </div>

@@ -33,7 +33,7 @@ export function TrustAwareFusionPanel({ trust }: TrustAwareFusionPanelProps) {
           </div>
         ))}
       </div>
-      <div className="mt-4 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-slate-400">
+      <div className="mt-4 rounded-lg border border-slate-700/60 bg-obsidian/35 p-3 text-xs leading-5 text-slate-400">
         Fusion weights follow trust continuously, allowing graceful degradation instead of abrupt GPS cutoff.
       </div>
     </Panel>

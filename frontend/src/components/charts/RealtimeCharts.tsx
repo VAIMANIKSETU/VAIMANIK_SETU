@@ -16,7 +16,7 @@ interface RealtimeChartsProps {
   history: Telemetry[];
 }
 
-const chartColor = "#19d3ff";
+const chartColor = "#3B82F6";
 
 function chartData(history: Telemetry[]) {
   return history.map((point) => ({
@@ -43,7 +43,7 @@ function MiniLine({ data, dataKey, color = chartColor }: { data: ReturnType<type
         <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
         <XAxis dataKey="time" hide />
         <YAxis hide domain={["auto", "auto"]} />
-        <Tooltip contentStyle={{ background: "#07101f", border: "1px solid rgba(255,255,255,.12)", borderRadius: 6 }} />
+        <Tooltip contentStyle={{ background: "#0B1020", border: "1px solid rgba(148,163,184,.22)", borderRadius: 8 }} />
         <Line type="monotone" dataKey={dataKey} stroke={color} strokeWidth={2.4} dot={false} animationDuration={650} />
       </LineChart>
     </ResponsiveContainer>
@@ -53,21 +53,21 @@ function MiniLine({ data, dataKey, color = chartColor }: { data: ReturnType<type
 export function RealtimeCharts({ history }: RealtimeChartsProps) {
   const data = chartData(history);
   const cards = [
-    ["Trust Timeline", "trustProxy", "#82f27e"],
-    ["GPS Signal Quality", "signal", "#19d3ff"],
-    ["Distance Error", "distanceError", "#ff4d6d"],
-    ["Speed Error", "speedError", "#f4c542"],
-    ["Altitude Error", "altitudeError", "#9dd7ff"],
-    ["Heading Error", "headingError", "#ff9f43"],
-    ["Attack Timeline", "attack", "#ff4d6d"],
-    ["System Events", "eventLoad", "#c5f56e"]
+    ["Trust Timeline", "trustProxy", "#22C55E"],
+    ["GPS Signal Quality", "signal", "#3B82F6"],
+    ["Distance Error", "distanceError", "#EF4444"],
+    ["Speed Error", "speedError", "#F59E0B"],
+    ["Altitude Error", "altitudeError", "#93C5FD"],
+    ["Heading Error", "headingError", "#F97316"],
+    ["Attack Timeline", "attack", "#EF4444"],
+    ["System Events", "eventLoad", "#22C55E"]
   ] as const;
 
   return (
-    <Panel title="Real-Time Charts">
+    <Panel title="Trust Metrics">
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {cards.map(([label, key, color]) => (
-          <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+          <div key={label} className="rounded-xl border border-slate-700/60 bg-obsidian/35 p-3">
             <div className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{label}</div>
             {key === "signal" ? (
               <ResponsiveContainer width="100%" height={150}>
@@ -81,7 +81,7 @@ export function RealtimeCharts({ history }: RealtimeChartsProps) {
                   <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
                   <XAxis dataKey="time" hide />
                   <YAxis hide domain={[0, 100]} />
-                  <Tooltip contentStyle={{ background: "#07101f", border: "1px solid rgba(255,255,255,.12)", borderRadius: 6 }} />
+                  <Tooltip contentStyle={{ background: "#0B1020", border: "1px solid rgba(148,163,184,.22)", borderRadius: 8 }} />
                   <Area type="monotone" dataKey={key} stroke={color} fill="url(#signalFill)" strokeWidth={2.2} animationDuration={650} />
                 </AreaChart>
               </ResponsiveContainer>

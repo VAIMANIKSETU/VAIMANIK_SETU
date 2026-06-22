@@ -29,10 +29,10 @@ export function AlertCenter({ alerts }: AlertCenterProps) {
 
   return (
     <Panel
-      title="Alert Center"
+      title="Attack Timeline"
       action={
         <select
-          className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 text-xs text-slate-200 outline-none"
+          className="rounded-lg border border-slate-700/70 bg-panel px-2 py-1 text-xs text-slate-200 outline-none"
           value={severity}
           onChange={(event) => setSeverity(event.target.value as Severity | "all")}
         >
@@ -43,7 +43,7 @@ export function AlertCenter({ alerts }: AlertCenterProps) {
         </select>
       }
     >
-      <label className="mb-3 flex items-center gap-2 rounded-md border border-white/10 bg-black/20 px-3 py-2">
+      <label className="mb-4 flex items-center gap-2 rounded-lg border border-slate-700/70 bg-obsidian/40 px-3 py-2">
         <Search size={16} className="text-slate-500" />
         <input
           className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-600"
@@ -52,18 +52,24 @@ export function AlertCenter({ alerts }: AlertCenterProps) {
           onChange={(event) => setQuery(event.target.value)}
         />
       </label>
-      <div className="max-h-[360px] space-y-2 overflow-auto pr-1">
+      <div className="max-h-[420px] space-y-0 overflow-auto pr-1">
         {filteredAlerts.length === 0 ? (
-          <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-sm text-slate-400">No matching alerts.</div>
+          <div className="rounded-lg border border-slate-700/60 bg-white/[0.03] p-4 text-sm text-slate-400">No matching alerts.</div>
         ) : (
-          filteredAlerts.map((alert) => (
-            <article key={alert.id} className={`rounded-md border bg-white/[0.03] p-3 ${severityClass[alert.severity]}`}>
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-sm font-semibold text-slate-100">{alert.title}</h3>
-                <span className="text-[10px] uppercase tracking-[0.12em]">{alert.severity}</span>
+          filteredAlerts.map((alert, index) => (
+            <article key={alert.id} className="relative grid grid-cols-[28px_minmax(0,1fr)] gap-3 pb-4">
+              <div className="relative flex justify-center">
+                <span className={`mt-2 h-3 w-3 rounded-full border ${severityClass[alert.severity]} bg-obsidian`} />
+                {index < filteredAlerts.length - 1 && <span className="absolute top-6 h-full w-px bg-slate-700/70" />}
               </div>
-              <p className="mt-1 text-xs text-slate-300">{alert.message}</p>
-              <div className="mt-2 text-[11px] text-slate-500">{new Date(alert.timestamp).toLocaleString()}</div>
+              <div className={`rounded-xl border bg-white/[0.03] p-4 ${severityClass[alert.severity]}`}>
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-sm font-semibold text-slate-100">{alert.title}</h3>
+                  <span className="rounded-full bg-black/20 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">{alert.severity}</span>
+                </div>
+                <p className="mt-2 text-xs leading-5 text-slate-300">{alert.message}</p>
+                <div className="mt-3 text-[11px] uppercase tracking-[0.12em] text-slate-500">{new Date(alert.timestamp).toLocaleString()}</div>
+              </div>
             </article>
           ))
         )}

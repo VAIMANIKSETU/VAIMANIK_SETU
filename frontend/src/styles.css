@@ -6,7 +6,7 @@
   color-scheme: dark;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #050816;
+  background: #0b1020;
 }
 
 * {
@@ -17,7 +17,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #050816;
+  background: #0b1020;
 }
 
 button,
@@ -30,45 +30,38 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 a:focus-visible {
-  outline: 2px solid #19d3ff;
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
 .glass-panel {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.16);
   background:
-    linear-gradient(145deg, rgba(13, 21, 38, 0.88), rgba(6, 10, 22, 0.74)),
-    rgba(12, 18, 34, 0.72);
-  box-shadow: 0 22px 80px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(18px);
+    linear-gradient(145deg, rgba(19, 26, 46, 0.94), rgba(11, 16, 32, 0.88)),
+    #131a2e;
+  box-shadow: 0 18px 56px rgba(2, 6, 23, 0.34), inset 0 1px 0 rgba(248, 250, 252, 0.045);
+  backdrop-filter: blur(16px);
 }
 
 .glass-panel::after {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  background: linear-gradient(110deg, transparent 0%, rgba(25, 211, 255, 0.045) 45%, transparent 58%);
-  transform: translateX(-120%);
-  animation: sweep 8s linear infinite;
+  display: none;
 }
 
 .bg-radar-grid {
   background-image:
-    linear-gradient(rgba(25, 211, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(25, 211, 255, 0.06) 1px, transparent 1px),
-    radial-gradient(circle at 20% 10%, rgba(130, 242, 126, 0.08), transparent 28%),
-    radial-gradient(circle at 80% 0%, rgba(255, 77, 109, 0.07), transparent 24%);
-  background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%;
+    linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 45% 0%, rgba(59, 130, 246, 0.11), transparent 42%);
+  background-size: 56px 56px, 56px 56px, 100% 100%;
 }
 
 .leaflet-container {
-  background: #07101f;
-  filter: saturate(0.66) contrast(1.08) brightness(0.68);
+  background: #0b1020;
+  filter: saturate(0.62) contrast(1.08) brightness(0.72);
 }
 
 .leaflet-control-attribution {
-  background: rgba(5, 8, 22, 0.78) !important;
+  background: rgba(11, 16, 32, 0.78) !important;
   color: #94a3b8 !important;
 }
 
@@ -85,27 +78,27 @@ a:focus-visible {
 }
 
 .gps-marker {
-  border: 2px solid #ff4d6d;
-  background: rgba(255, 77, 109, 0.2);
-  box-shadow: 0 0 22px rgba(255, 77, 109, 0.58);
+  border: 2px solid #ef4444;
+  background: rgba(239, 68, 68, 0.18);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.28);
 }
 
 .gps-marker span {
   width: 8px;
   height: 8px;
-  background: #ff4d6d;
+  background: #ef4444;
 }
 
 .fused-marker {
-  border: 2px solid #19d3ff;
-  background: rgba(25, 211, 255, 0.16);
-  box-shadow: 0 0 22px rgba(25, 211, 255, 0.58);
+  border: 2px solid #3b82f6;
+  background: rgba(59, 130, 246, 0.16);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.26);
 }
 
 .fused-marker span {
   width: 9px;
   height: 9px;
-  background: #19d3ff;
+  background: #3b82f6;
 }
 
 .aircraft-marker {
@@ -119,8 +112,9 @@ a:focus-visible {
   height: 44px;
   place-items: center;
   border-radius: 999px;
-  background: rgba(25, 211, 255, 0.16);
-  box-shadow: 0 0 28px rgba(25, 211, 255, 0.54);
+  border: 1px solid rgba(248, 250, 252, 0.28);
+  background: rgba(59, 130, 246, 0.18);
+  box-shadow: 0 12px 36px rgba(2, 6, 23, 0.4);
   transition: transform 650ms ease;
 }
 
@@ -129,9 +123,9 @@ a:focus-visible {
   height: 0;
   content: "";
   border-right: 8px solid transparent;
-  border-bottom: 24px solid #eafcff;
+  border-bottom: 24px solid #f8fafc;
   border-left: 8px solid transparent;
-  filter: drop-shadow(0 0 8px rgba(25, 211, 255, 0.7));
+  filter: drop-shadow(0 6px 10px rgba(2, 6, 23, 0.38));
 }
 
 .aircraft-shell span {
@@ -140,14 +134,14 @@ a:focus-visible {
   width: 26px;
   height: 5px;
   border-radius: 999px;
-  background: #19d3ff;
+  background: #3b82f6;
   opacity: 0.78;
 }
 
 .path-glow {
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 7px currentColor);
+  filter: drop-shadow(0 4px 8px rgba(2, 6, 23, 0.36));
 }
 
 .path-true {
@@ -159,7 +153,7 @@ a:focus-visible {
 }
 
 .path-fused {
-  filter: drop-shadow(0 0 10px rgba(25, 211, 255, 0.76));
+  filter: drop-shadow(0 4px 10px rgba(59, 130, 246, 0.32));
 }
 
 .legend-dot {
@@ -167,20 +161,20 @@ a:focus-visible {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  box-shadow: 0 0 10px currentColor;
+  box-shadow: 0 0 0 3px rgba(248, 250, 252, 0.06);
 }
 
 .spoofing-panel {
-  border-color: rgba(255, 77, 109, 0.28);
-  box-shadow: 0 26px 90px rgba(255, 77, 109, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(239, 68, 68, 0.32);
+  box-shadow: 0 22px 70px rgba(239, 68, 68, 0.12), inset 0 1px 0 rgba(248, 250, 252, 0.06);
 }
 
 .ai-command-panel {
-  border-color: rgba(25, 211, 255, 0.24);
+  border-color: rgba(59, 130, 246, 0.24);
   background:
-    linear-gradient(135deg, rgba(25, 211, 255, 0.12), rgba(5, 8, 22, 0.26) 34%, rgba(130, 242, 126, 0.055)),
-    linear-gradient(145deg, rgba(13, 21, 38, 0.92), rgba(6, 10, 22, 0.78));
-  box-shadow: 0 30px 110px rgba(25, 211, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(19, 26, 46, 0.92) 36%, rgba(34, 197, 94, 0.06)),
+    linear-gradient(145deg, rgba(19, 26, 46, 0.96), rgba(11, 16, 32, 0.9));
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.38), inset 0 1px 0 rgba(248, 250, 252, 0.07);
 }
 
 @keyframes pathPulse {

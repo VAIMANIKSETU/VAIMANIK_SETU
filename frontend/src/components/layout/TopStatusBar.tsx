@@ -20,16 +20,16 @@ export function TopStatusBar({ health, telemetry, backendOnline }: TopStatusBarP
   const systemTone = health.system === "Online" ? "normal" : health.system === "Degraded" ? "warning" : "critical";
 
   return (
-    <header className="sticky top-0 z-30 border-b border-white/10 bg-obsidian/78 px-4 py-3 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-slate-700/50 bg-obsidian/90 px-4 py-3 backdrop-blur-xl">
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 text-lg font-semibold text-white">
               <Shield className="text-cyanline" size={20} />
-              AeroSentinel Command
+              AeroSentinel Mission Intelligence
             </div>
             <div className="text-xs text-slate-400">
-              {backendOnline ? "Backend linked" : "Demo telemetry active"} · UAV trust monitoring
+              {backendOnline ? "Backend linked" : "Demo telemetry active"} - AI GPS spoofing defense
             </div>
           </div>
           <div className="lg:hidden">
