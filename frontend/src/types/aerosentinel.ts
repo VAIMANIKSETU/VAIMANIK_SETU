@@ -1,14 +1,46 @@
 export type Severity = "normal" | "warning" | "critical";
-export type SimulationMode = "normal" | "spoofing" | "jamming" | "sensorFailure" | "mixed";
+export type SimulationMode =
+  | "normal"
+  | "spoofing"
+  | "jamming"
+  | "sensorFailure"
+  | "mixed"
+  | "coordinateJump"
+  | "gradualDrift"
+  | "replay"
+  | "delay"
+  | "velocitySpoof"
+  | "altitudeSpoof"
+  | "headingManipulation"
+  | "adaptiveSpoof";
 
 export interface Coordinate {
   lat: number;
   lon: number;
 }
 
+export interface AerospaceTelemetryStream {
+  gps: Coordinate;
+  velocity: number;
+  heading: number;
+  altitude: number;
+  imu: {
+    accelX: number;
+    accelY: number;
+    accelZ: number;
+    gyroX: number;
+    gyroY: number;
+    gyroZ: number;
+  };
+  temperature: number;
+  barometer: number;
+}
+
 export interface Telemetry {
   timestamp: string;
   truePosition?: Coordinate;
+  realStream?: AerospaceTelemetryStream;
+  spoofedStream?: AerospaceTelemetryStream;
   gps: Coordinate;
   fused: Coordinate;
   altitude: number;
@@ -21,6 +53,13 @@ export interface Telemetry {
   cpuUsage: number;
   memoryUsage: number;
   fps: number;
+}
+
+export interface SimulationSettings {
+  active: boolean;
+  attackType: SimulationMode;
+  severity: number;
+  durationSeconds: number;
 }
 
 export interface TrustState {
