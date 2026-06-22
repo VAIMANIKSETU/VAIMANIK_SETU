@@ -158,10 +158,10 @@ function MissionIntelligenceConsole({
   ];
 
   return (
-    <div className="mt-3 space-y-3">
-      <div className="grid gap-3 xl:grid-cols-[minmax(210px,0.78fr)_minmax(0,1.38fr)_minmax(250px,0.92fr)]">
-        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-3">
-          <div className="mb-3 flex items-center justify-between">
+    <div className="mt-2 flex-none space-y-2">
+      <div className="grid gap-2 xl:grid-cols-[minmax(210px,0.78fr)_minmax(0,1.38fr)_minmax(250px,0.92fr)]">
+        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-2.5">
+          <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
               <Navigation size={14} className="text-cyanline" />
               Live Flight Telemetry
@@ -170,9 +170,9 @@ function MissionIntelligenceConsole({
               1s
             </span>
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1.5">
             {telemetryItems.map(([label, value, unit]) => (
-              <div key={label} className="rounded-md border border-slate-700/50 bg-panel/55 px-2.5 py-2">
+              <div key={label} className="rounded-md border border-slate-700/50 bg-panel/55 px-2.5 py-1.5">
                 <div className="text-[9px] uppercase tracking-[0.16em] text-slate-500">{label}</div>
                 <div className={`mt-1 text-sm font-semibold ${label === "GPS Status" ? statusColor(gpsConfidence) : "text-slate-100"}`}>
                   {value} {unit && <span className="text-[10px] font-medium text-slate-500">{unit}</span>}
@@ -182,7 +182,7 @@ function MissionIntelligenceConsole({
           </div>
         </div>
 
-        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-3">
+        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-2.5">
           <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
               <Activity size={14} className="text-limepulse" />
@@ -190,7 +190,7 @@ function MissionIntelligenceConsole({
             </div>
             <div className={`text-xs font-bold ${statusColor(trust.score)}`}>{Math.round(trust.score)}%</div>
           </div>
-          <div className="h-[104px]">
+          <div className="h-[96px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
                 <defs>
@@ -229,15 +229,15 @@ function MissionIntelligenceConsole({
           </div>
         </div>
 
-        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-3">
-          <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+        <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 p-2.5">
+          <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
             <BrainCircuit size={14} className="text-amberwarn" />
             Explainability Panel
           </div>
           <div className="rounded-md border border-amberwarn/20 bg-amberwarn/10 p-2.5 text-xs leading-relaxed text-amber-50/90">{explanation}</div>
-          <div className="mt-2 grid grid-cols-2 gap-2">
+          <div className="mt-2 grid grid-cols-2 gap-1.5">
             {explainItems.map(([label, value]) => (
-              <div key={label} className="rounded-md border border-slate-700/50 bg-panel/55 px-2.5 py-2">
+              <div key={label} className="rounded-md border border-slate-700/50 bg-panel/55 px-2.5 py-1.5">
                 <div className="text-[9px] uppercase tracking-[0.16em] text-slate-500">{label}</div>
                 <div className="mt-1 text-sm font-semibold text-slate-100">{value}</div>
               </div>
@@ -256,8 +256,8 @@ function MissionIntelligenceConsole({
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-700/60 bg-obsidian/45 px-3 py-2.5">
-        <div className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+      <div className="flex flex-none flex-col rounded-lg border border-slate-700/60 bg-obsidian/45 px-3 py-2">
+        <div className="mb-1.5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-300">
           <Route size={14} className="text-cyanline" />
           Event Timeline
         </div>
@@ -275,10 +275,10 @@ function MissionIntelligenceConsole({
                       : "border-slate-700/50 bg-panel/55 text-slate-500";
 
             return (
-              <div key={event.label} className={`relative rounded-md border px-2.5 py-2 ${toneClass}`}>
+              <div key={event.label} className={`relative flex min-h-[26px] items-center rounded-md border px-2 py-1 ${toneClass}`}>
                 <div className="flex items-center gap-2">
-                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-current/10 text-[10px] font-bold">{index + 1}</span>
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em]">{event.label}</span>
+                  <span className="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-current/10 text-[9px] font-bold">{index + 1}</span>
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.12em]">{event.label}</span>
                 </div>
               </div>
             );
@@ -388,7 +388,7 @@ export function MissionMap({ telemetry, history, trust, threats, alerts }: Missi
   return (
     <Panel
       title="Mission Map"
-      className={`min-h-[680px] ${spoofingActive ? "spoofing-panel" : ""}`}
+      className={`flex min-h-[680px] flex-col ${spoofingActive ? "spoofing-panel" : ""}`}
       action={
         <div className="hidden items-center gap-3 text-xs text-slate-300 md:flex">
           <span className="inline-flex items-center gap-1"><i className="legend-dot bg-limepulse" /> True</span>
@@ -420,7 +420,7 @@ export function MissionMap({ telemetry, history, trust, threats, alerts }: Missi
           <div className="mt-1 text-sm font-semibold text-white">{activeThreats.length} threats / {alerts.length} alerts</div>
         </div>
       </div>
-      <div className="h-[360px] overflow-hidden rounded-xl border border-slate-700/60 shadow-2xl shadow-black/30 xl:h-[400px]">
+      <div className="min-h-[360px] flex-1 overflow-hidden rounded-xl border border-slate-700/60 shadow-2xl shadow-black/30 xl:min-h-[400px]">
         <MapContainer center={center} zoom={15} scrollWheelZoom className="h-full w-full" zoomControl={false}>
           <CameraTracker center={center} />
           <TileLayer
