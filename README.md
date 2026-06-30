@@ -418,7 +418,7 @@ When the backend is unavailable, the dashboard automatically runs demo telemetry
 
 ## Screenshots
 
-Add screenshots to `docs/screenshots/` when available:
+Checkout screenshots at `docs/screenshots/`:
 
 - Dashboard Overview
 - Normal Flight
@@ -426,7 +426,6 @@ Add screenshots to `docs/screenshots/` when available:
 - Trust Collapse
 - Trust-Aware Fusion
 
-Recommended image names:
 
 ```text
 docs/screenshots/dashboard-overview.png
@@ -438,9 +437,7 @@ docs/screenshots/trust-aware-fusion.png
 
 ---
 
-## Badge Recommendations
-
-Recommended GitHub badges:
+## FusionStack
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
